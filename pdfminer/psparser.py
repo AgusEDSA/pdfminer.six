@@ -132,7 +132,10 @@ def literal_name(x):
         if settings.STRICT:
             raise PSTypeError('Literal required: %r' % (x,))
         else:
-            name=x
+            if hasattr(x,'resolve'):
+                name=x.resolve().name
+            else:
+                name=x
     else:
         name=x.name
         if six.PY3:
